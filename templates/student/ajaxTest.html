@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf8">
+		<script
+			  src="http://code.jquery.com/jquery-2.2.1.min.js"
+			  integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+			  crossorigin="anonymous"></script>
+		<title>Ajax测试</title>
+	</head>
+	<body>
+	    <h2>Ajax测试</h2>
+		{% extends "student/base.html" %}
+		{%block content%}
+
+
+
+
+
+<script>
+	$(document).ready(function(data){
+		 $("#test").click(function(){
+                $.get("/student/getResult/", {"context":$("#sentence").val()},function(data){
+                	$("#output").empty();
+                	$("#output").append(data);
+                });
+          });
+	});
+</script>
+
+	<div style="padding-left:20%;padding-right:20%;margin-top:20px;margin-left: auto; margin-right: auto;">
+
+            <textarea cols="50" rows="10" id="sentence" name="input_text" style="width:100%;BORDER-color:#000;">提交后台信息</textarea>
+            <br>
+    <div style="border-color:#ccc;border-top-style:solid;border-width:0px;text-align:center;">
+
+	<div style="cursor:pointer;
+	padding:5px;margin-top:5;margin-bottom:5;
+	color:rgb(240,65,85);
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	border-radius: 3px;
+	" id = "test" name = "test">
+			<span>〖Ajax测试〗</span>
+	</div>
+	</div>
+    <textarea cols="50" rows="10" id="output" name="output_text" readonly="readonly" style="width:100%;BORDER-width:0px;">后台回调返回信息</textarea>
+    </div>
+		 
+
+		{% endblock %}
+	</body>
+</html>
+
+		 

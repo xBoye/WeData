@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf8">
+		<title>学生成绩表</title>
+	</head>
+	<body>
+		{% extends "student/base.html" %}
+		{%block content%}
+		{% for sc in scs %}
+		{% if forloop.first %}
+		<table>
+			<tr bgcolor="ccccc">
+				<td width=150>序号</td>
+				<td width=150>学号</td>
+				<td width=200>姓名</td>
+				<td width=250>课号</td>
+				<td width=200>课名</td>
+				<td width=200>成绩</td>
+			</tr>
+		{% endif %}
+			<tr bgcolor='{%cycle "#ffccff" "ccffcc"%}'>
+                <td>{{sc.id}}</td>
+                <td>{{sc.student_id}}</td>
+                <td>{{sc.student.sname}}</td>
+                <td>{{sc.course_id}}</td>
+                <td>{{sc.course.cname}}</td>
+                <td>{{sc.score}}</td>
+            </tr>
+        {% if forloop.last %}   
+		</table>
+		{% endif %}
+		{% empty %}
+		{% endfor %}
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if scs.has_previous %}
+            <a href="?page={{ scs.previous_page_number }}">previous</a>
+        {% endif %}
+ 
+        <span class="current">
+            Page {{ scs.number }} of {{ scs.paginator.num_pages }}.
+        </span>
+ 
+        {% if scs.has_next %}
+            <a href="?page={{ scs.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>		
+		
+		
+		{% endblock %}
+	</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf8">
+		<title>学生成绩表</title>
+	</head>
+	<body>
+	    <h2>学生成绩表</h2>
+		{% extends "student/base.html" %}
+		{%block content%}
+		{% for sc in scs %}
+		{% if forloop.first %}
+		<table>
+			<tr bgcolor="ccccc">
+				<td width=40>序号</td>
+				<td width=50>学号</td>
+				<td width=80>姓名</td>
+				<td width=50>课号</td>
+				<td width=150>课名</td>
+				<td width=50>成绩</td>
+				<td width=70>授课老师</td>
+				<td width=110>操作</td>
+			</tr>
+		{% endif %}
+			<tr bgcolor='{%cycle "#ffccff" "ccffcc"%}'>
+                <td>{{sc.id}}</td>
+                <td>{{sc.student_id}}</td>
+                <td>{{sc.student.sname}}</td>
+                <td>{{sc.course_id}}</td>
+                <td>{{sc.course.cname}}</td>
+                <td>{{sc.score}}</td>
+				<td>{{sc.course.teacher.tname}}</td>
+				<td><input type="button" id="edit" name="edit" value="编辑" >|<input id="delete" type="button" name="delete" value="删除"></td>
+				<input type="hidden" name="id" id="id" value="{{ sc.id }}">
+            </tr>
+        {% if forloop.last %}   
+		</table>
+		{% endif %}
+		{% empty %}
+		{% endfor %}
+
+<nav aria-label='Page navigation'>
+  <ul class="pagination">
+      {% if scs.has_previous %}
+	  
+		 <a href="?page={{ scs.previous_page_number }}" aria-label='Previous'>
+			    <span aria-hidden='true'>&laquo;</span>
+		 </a>
+	  
+      {% endif %}
+ 
+      
+	  {% for pg in scs.paginator.page_range %}
+	     {% if scs.number == pg %}
+		    <span class="active"><a href="?page={{ pg }}">{{ pg }}</a></span>
+		 {% else %}
+		    <a href="?page={{ pg }}">{{ pg }}</a>
+		 {% endif %}
+	  {% endfor %}
+	  
+	  
+	  {% if scs.has_next %}
+	     
+		 <a href="?page={{ scs.next_page_number }}" aria-label='Next'>
+			 <span aria-hidden='true'>&raquo;</span>
+		 </a>
+		 
+      {% endif %}
+   </ul>
+</nav>
+		
+		<form action="/student/get_score_by_id/" method="GET">
+			<label for='id'>序号：</label> 
+			<input id='id' type="text" name="id" />			
+			<button type="submit" id="getscorebyid">查询</button>
+		 </form></br></br>
+		{% endblock %}
+	</body>
+</html>
